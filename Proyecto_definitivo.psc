@@ -2,7 +2,7 @@ Proceso proyecto_semana10
     Definir listaDeEstudiantes, listaSeleccionados, usuario, estudianteSeleccionado, jugador, tablero Como Caracter;
     Definir fueSeleccionado, ganador Como Logico;
     Definir i, j, turno, fila, columna, indiceManual, contadorSeleccionados Como Entero;
-    Dimension listaDeEstudiantes[25], listaSeleccionados[25]; // Aumentar tamaño a 25
+    Dimension listaDeEstudiantes[24], listaSeleccionados[24]; 
     Dimension tablero[3,3];
     
     // Inicializar lista de estudiantes
@@ -23,9 +23,9 @@ Proceso proyecto_semana10
     listaDeEstudiantes[14] <- "Luisa Cristina Cruz De La Cruz";
     listaDeEstudiantes[15] <- "Michael Manuel Cotes Aquino";
     listaDeEstudiantes[16] <- "Raul Santiago Castro Santana";
-    listaDeEstudiantes[17] <- "Rebeca Pérez";
+    listaDeEstudiantes[17] <- "Rebeca PÃ©rez";
     listaDeEstudiantes[18] <- "Rocelyn Rosario Nuez";
-    listaDeEstudiantes[19] <- "Rubi Pérez";
+    listaDeEstudiantes[19] <- "Rubi PÃ©rez";
     listaDeEstudiantes[20] <- "Victor Vladimir Guzman Mendoza";
     listaDeEstudiantes[21] <- "Viensy Perez";
     listaDeEstudiantes[22] <- "Winder Andres Valdez Del Orbe";
@@ -40,7 +40,7 @@ Proceso proyecto_semana10
     Repetir
         Escribir "Seleccione una de las siguientes opciones:";
         Escribir "1. Seleccionar aleatoriamente.";
-        Escribir "2. Seleccionar manualmente por índice.";
+        Escribir "2. Seleccionar manualmente por Ã­ndice.";
         Escribir "3. Ver historial de seleccionados.";
         Escribir "4. Mouske Herramienta Misteriosa.";
         Escribir "Presiona Q para salir.";
@@ -56,7 +56,7 @@ Proceso proyecto_semana10
             Escribir " ";
         Sino
             Si usuario = "1" Entonces
-                // Selección aleatoria de estudiante
+                // SelecciÃ³n aleatoria de estudiante
                 Si contadorSeleccionados < 23 Entonces
                     Repetir
                         i <- azar(24);
@@ -77,10 +77,10 @@ Proceso proyecto_semana10
             FinSi
             
             Si usuario = "2" Entonces
-                // Selección manual de estudiante por índice
+                // SelecciÃ³n manual de estudiante por Ã­ndice
                 Si contadorSeleccionados < 23 Entonces
                     Repetir
-                        Escribir "Ingrese el índice (0-24) del estudiante que desea seleccionar:"; // Cambiar a 24
+                        Escribir "Ingrese el Ã­ndice (0-24) del estudiante que desea seleccionar:"; // Cambiar a 24
                         Para i<-0 Hasta 23 Con Paso 1 Hacer
                             Escribir i,".",listaDeEstudiantes[i];
                         FinPara
@@ -124,7 +124,7 @@ Proceso proyecto_semana10
                 turno <- 1;
                 ganador <- Falso;
                 
-                // Inicializar tablero vacío
+                // Inicializar tablero vacÃ­o
                 Para i <- 0 Hasta 2 Hacer
                     Para j <- 0 Hasta 2 Hacer
                         tablero[i,j] <- " ";
@@ -149,7 +149,7 @@ Proceso proyecto_semana10
                         Escribir "";
                     FinPara;
                     
-                    // Solicitar posición
+                    // Solicitar posiciÃ³n
                     Escribir "Turno de jugador ", jugador;
                     Repetir
                         Escribir "Ingresa fila (0-2): ";
@@ -159,7 +159,7 @@ Proceso proyecto_semana10
                         
                         Si tablero[fila, columna] <> " " Entonces
                             Escribir "*----------------------------*";
-                            Escribir "|Esa casilla ya está ocupada.|";
+                            Escribir "|Esa casilla ya estÃ¡ ocupada.|";
                             Escribir "*----------------------------*";
                         FinSi;
                     Hasta Que tablero[fila, columna] = " ";
@@ -188,7 +188,7 @@ Proceso proyecto_semana10
                     Si ganador Entonces
                         Limpiar Pantalla;
                         Escribir "*------------------------------------*";
-                        Escribir "|¡El jugador ", jugador, " ha ganado!|";
+                        Escribir "|Â¡El jugador ", jugador, " ha ganado!|";
                         Escribir "*------------------------------------*";
                         Para i <- 0 Hasta 2 Hacer
                             Escribir "";
@@ -204,7 +204,7 @@ Proceso proyecto_semana10
                 
                 Si No ganador Entonces
                     Escribir "*--------------*";
-                    Escribir "|¡Es un empate!|";
+                    Escribir "|Â¡Es un empate!|";
                     Escribir "*--------------*";
                 FinSi;
             FinSi;
