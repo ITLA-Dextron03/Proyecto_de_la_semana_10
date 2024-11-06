@@ -176,7 +176,7 @@ Proceso proyecto_semana10
                 Escribir "Historial de estudiantes seleccionados:";
                 Para i <- 0 Hasta 23 Hacer
                     Si listaSeleccionados[i] <> "" Entonces
-                        Escribir "- ", listaSeleccionados[i];
+                        Escribir i+1,".", listaSeleccionados[i];
                     FinSi;
                 FinPara;
                 Escribir "";
