@@ -1,12 +1,71 @@
+Funcion EscribirSeleccionado(estudiante)
+    Escribir "*-----------------------------------------------*";
+    Escribir "| Estudiante seleccionado: ", estudiante, " |";
+    Escribir "*-----------------------------------------------*";
+FinFuncion
+
+Funcion MostrarTablero(tablero)
+	Definir i, j Como Entero;
+	
+	Limpiar Pantalla;
+    Para i <- 0 Hasta 2 Hacer
+        Para j <- 0 Hasta 2 Hacer
+            Escribir Sin Saltar tablero[i,j], " | ";
+        FinPara;
+        Escribir "";
+    FinPara;
+FinFuncion
+
+Funcion EscribirErrorMensaje(mensaje)
+    Limpiar Pantalla;
+    Escribir "*-----------------------------------------*";
+    Escribir "| ", mensaje, "|";
+    Escribir "*-----------------------------------------*";
+FinFuncion
+
+Funcion estudianteSeleccionadoA <- SeleccionAleatoria(listaDeEstudiantes, listaSeleccionados)
+    Definir estudianteSeleccionado Como Caracter;
+	Definir  i Como Entero;
+    
+    Repetir
+        i <- azar(24);
+    Hasta Que listaSeleccionados[i] = ""; // Asegura que no haya sido seleccionado
+    
+    estudianteSeleccionado <- listaDeEstudiantes[i];
+    listaSeleccionados[i] <- estudianteSeleccionado;
+    estudianteSeleccionadoA <- estudianteSeleccionado;
+FinFuncion
+
+Funcion estudianteSeleccionadoM <- SeleccionManual(listaDeEstudiantes, listaSeleccionados)
+    Definir  estudianteSeleccionado Como Caracter;
+	Definir indiceManual Como Entero;
+    
+    Repetir
+        Escribir "Ingrese el índice (0-23) del estudiante que desea seleccionar:";
+        Para i<-0 Hasta 23 Con Paso 1 Hacer
+            Escribir i, ".", listaDeEstudiantes[i];
+        FinPara
+        Leer indiceManual;
+    Hasta Que indiceManual >= 0 y indiceManual <= 23;
+    
+    Si listaSeleccionados[indiceManual] = "" Entonces
+        estudianteSeleccionado <- listaDeEstudiantes[indiceManual];
+        listaSeleccionados[indiceManual] <- estudianteSeleccionado;
+        estudianteSeleccionadoM <- estudianteSeleccionado;
+    Sino
+        EscribirErrorMensaje("Este estudiante ya ha sido seleccionado.");
+        estudianteSeleccionadoM <- "";
+    FinSi
+FinFuncion
+
 Proceso proyecto_semana10
     Definir listaDeEstudiantes, listaSeleccionados, usuario, estudianteSeleccionado, jugador, tablero Como Caracter;
     Definir fueSeleccionado, ganador Como Logico;
-    Definir i, j, turno, fila, columna, indiceManual, contadorSeleccionados Como Entero;
+    Definir i, j, turno, fila, columna, indiceManual, contadorSeleccionados, a Como Entero;
     Dimension listaDeEstudiantes[24], listaSeleccionados[24]; 
     Dimension tablero[3,3];
     
-    // Inicializar lista de estudiantes
-    listaDeEstudiantes[0] <- "Adam Steven Herrera Medina";
+	listaDeEstudiantes[0] <- "Adam Steven Herrera Medina";
     listaDeEstudiantes[1] <- "Alexis Dawry Encarnacion Encarnacion";
     listaDeEstudiantes[2] <- "Andres Pascual Manzueta Miranda";
     listaDeEstudiantes[3] <- "Ashley Bello Acosta";
@@ -31,8 +90,7 @@ Proceso proyecto_semana10
     listaDeEstudiantes[22] <- "Winder Andres Valdez Del Orbe";
     listaDeEstudiantes[23] <- "David Jonathan Suardi Nivar";
 	
-    // Inicializar lista de seleccionados y contador de seleccionados
-    Para i <- 0 Hasta 24 Hacer
+    Para i <- 0 Hasta 23 Hacer
         listaSeleccionados[i] <- "";
     FinPara;
     contadorSeleccionados <- 0;
@@ -48,7 +106,7 @@ Proceso proyecto_semana10
         Limpiar Pantalla;
         
         Si usuario = "Q" o usuario = "q" Entonces
-			Escribir " ";
+            Escribir " ";
             Escribir "----------------------------------------------";
             Escribir "|          Has presionado la letra Q.         |";    
             Escribir "|   Hasta luego, gracias por usar el programa |";    
@@ -56,26 +114,36 @@ Proceso proyecto_semana10
             Escribir " ";
         Sino
             Si usuario = "1" Entonces
-                // Selección aleatoria de estudiante
+                // Selección aleatoria de estudiante con animación
                 Si contadorSeleccionados < 23 Entonces
+                    Escribir "Seleccionando estudiante al azar, por favor espere...";
+                    
+                    // Animación de selección
+                    Para a <- 0 Hasta 10 Hacer  // Número de iteraciones para la animación
+                        Limpiar Pantalla;
+                        i <- azar(24);  // Selección aleatoria temporal para animación
+                        Escribir "*====================================================*";
+                        Escribir "| Estudiante posible: ", listaDeEstudiantes[i], " |";
+                        Escribir "*====================================================*";
+                        Esperar 1 Segundos;
+                    FinPara;
+                    
+                    // Selección final de estudiante
                     Repetir
                         i <- azar(24);
-                    Hasta Que listaSeleccionados[i] = ""; // Repite hasta encontrar uno no seleccionado
-					
+                    Hasta Que listaSeleccionados[i] = "";  // Asegurar que no haya sido seleccionado
+                    
                     estudianteSeleccionado <- listaDeEstudiantes[i];
                     listaSeleccionados[i] <- estudianteSeleccionado;
                     contadorSeleccionados <- contadorSeleccionados + 1;
                     
-                    Escribir "*------------------------------------------------------*";
-                    Escribir "| Estudiante seleccionado aleatoriamente: ", estudianteSeleccionado, " |";
-                    Escribir "*------------------------------------------------------*";
+                    // Llamamos a la función EscribirSeleccionado
+                    EscribirSeleccionado(estudianteSeleccionado);
                 Sino
-                    Escribir "*-------------------------------------------------*";
-                    Escribir "| Todos los estudiantes ya han sido seleccionados. |";
-                    Escribir "*-------------------------------------------------*";
+					EscribirErrorMensaje("Todos los estudiantes ya han sido seleccionados.");
                 FinSi
             FinSi
-            
+			
             Si usuario = "2" Entonces
                 // Selección manual de estudiante por índice
                 Si contadorSeleccionados < 23 Entonces
@@ -92,24 +160,19 @@ Proceso proyecto_semana10
                         listaSeleccionados[indiceManual] <- estudianteSeleccionado;
                         contadorSeleccionados <- contadorSeleccionados + 1;
                         Limpiar Pantalla;
-                        Escribir "*------------------------------------------------------*";
-                        Escribir "| Estudiante seleccionado manualmente: ", estudianteSeleccionado, " |";
-                        Escribir "*------------------------------------------------------*";
+                        
+                        // Llamamos a la función EscribirSeleccionado
+                        EscribirSeleccionado(estudianteSeleccionado);
                     Sino
-						Limpiar Pantalla;
-                        Escribir "*------------------------------------------------*";
-                        Escribir "| Este estudiante ya ha sido seleccionado.        |";
-                        Escribir "*------------------------------------------------*";
+                        Limpiar Pantalla;
+                        EscribirErrorMensaje("Este estudiante ya ha sido seleccionado.");
                     FinSi
                 Sino
-                    Escribir "*-------------------------------------------------*";
-                    Escribir "| Todos los estudiantes ya han sido seleccionados. |";
-                    Escribir "*-------------------------------------------------*";
+					EscribirErrorMensaje("Todos los estudiantes ya han sido seleccionados.");
                 FinSi
             FinSi
             
             Si usuario = "3" Entonces
-                // Mostrar historial de seleccionados
                 Escribir "Historial de estudiantes seleccionados:";
                 Para i <- 0 Hasta 23 Hacer
                     Si listaSeleccionados[i] <> "" Entonces
@@ -139,15 +202,8 @@ Proceso proyecto_semana10
                         jugador <- "O";
                     FinSi;
                     
-                    // Mostrar tablero
-                    Limpiar Pantalla;
-                    Para i <- 0 Hasta 2 Hacer
-                        
-                        Para j <- 0 Hasta 2 Hacer
-                            Escribir Sin Saltar tablero[i,j], " | ";
-                        FinPara;
-                        Escribir "";
-                    FinPara;
+                    // Llamamos a la función MostrarTablero
+                    MostrarTablero(tablero);
                     
                     // Solicitar posición
                     Escribir "Turno de jugador ", jugador;
@@ -186,17 +242,10 @@ Proceso proyecto_semana10
                     FinSi;
                     
                     Si ganador Entonces
-                        Limpiar Pantalla;
-                        Escribir "*------------------------------------*";
+						MostrarTablero(tablero);
+                        Escribir "*------------------------*";
                         Escribir "|¡El jugador ", jugador, " ha ganado!|";
-                        Escribir "*------------------------------------*";
-                        Para i <- 0 Hasta 2 Hacer
-                            Escribir "";
-                            Para j <- 0 Hasta 2 Hacer
-                                Escribir Sin Saltar tablero[i,j], " | ";
-                            FinPara;
-                            Escribir "";
-                        FinPara;
+                        Escribir "*------------------------*";
                     FinSi;
                     
                     turno <- turno + 1;
@@ -208,6 +257,5 @@ Proceso proyecto_semana10
                     Escribir "*--------------*";
                 FinSi;
             FinSi;
-        FinSi;
-    Hasta Que usuario = "Q" o usuario = "q";
+        FinSi;    Hasta Que usuario = "Q" o usuario = "q";
 Fin Proceso
